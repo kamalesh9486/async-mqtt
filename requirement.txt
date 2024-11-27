@@ -2,3 +2,4 @@ pandas
 paho-mqtt
 gmqtt
 mysql-connector-python
+https://medium.com/jungletronics/mosquitto-meets-raspberry-pi-part-2-2f3dedf800bb

@@ -4,3 +4,4 @@ gmqtt
 mysql-connector-python
 https://medium.com/jungletronics/mosquitto-meets-raspberry-pi-part-2-2f3dedf800bb
 https://youtu.be/DUGZC-tNm2w?si=XsjXsZwhRo6iT56S
+https://www.youtube.com/watch?v=77kOEIEekS4

@@ -23,27 +23,32 @@ def get_main_db():
     return couch['main_db']
 
 # Store received data in CouchDB
+# Store received data in CouchDB
 def store_received_data(data):
     main_db = get_main_db()
-    
+
     # Prepare data to be stored
     doc_id = data.get('_id')
+    
     if doc_id:
+        data_section = data.get('data', {})  # Safely access 'data' or use an empty dictionary if it doesn't exist
         doc = {
             '_id': doc_id,
-            'data_machine_id': data['data']['machine_id'],
-            'data_machine_status': data['data']['machine_status'],
-            'data_shot_count': data['data']['shot_count'],
-            'data_shot_status': data['data']['shot_status'],
-            'data_status': data['data']['status'],
-            'updated_on': data['updated_on']  # Assuming updated_on is a datetime string
+            'data_machine_id': data_section.get('machine_id'),  # Use .get() to avoid KeyError
+            'data_machine_status': data_section.get('machine_status'),
+            'data_shot_count': data_section.get('shot_count'),
+            'data_shot_status': data_section.get('shot_status'),
+            'data_status': data_section.get('status'),
+            'updated_on': data.get('updated_on')  # Assuming updated_on is a datetime string
         }
+
         try:
             main_db[doc_id] = doc  # Insert or update the document in the database
             print(f"Data for _id {doc_id} stored in CouchDB.")
         except couchdb.http.ResourceConflict:
             print(f"Document with _id {doc_id} already exists in the database. Updating...")
             main_db[doc_id] = doc  # Update the existing document if necessary
+
 
 # MQTT client setup
 client = mqtt.Client()
